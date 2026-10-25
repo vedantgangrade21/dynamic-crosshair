@@ -1,0 +1,27 @@
+// Shared build logic. Each folder in versions/ is its own Gradle build that applies this file.
+
+def srcRoot = file("$rootDir/../../src/main")
+
+version = "${project.mod_version}+mc${project.minecraft_version}"
+base { archivesName = 'dynamic-crosshair' }
+
+sourceSets.main {
+	// Shared logic plus the one mixin that matches this version's HUD API (see setup-versions.ps1).
+	java.srcDirs = ["$srcRoot/java", file("$rootDir/../../src/${project.hud_variant}/java")]
+	resources.srcDirs = ["$srcRoot/resources"]
+}
+
+processResources {
+	def props = [
+		version     : project.version,
+		mc_range    : project.mc_range,
+		java_version: project.java_version
+	]
+	inputs.properties props
+	filesMatching("fabric.mod.json") { expand props }
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = 'UTF-8'
+	it.options.release = project.java_version as int
+}

@@ -1,0 +1,17 @@
+{
+	"schemaVersion": 1,
+	"id": "dynamiccrosshair",
+	"version": "${version}",
+	"name": "Dynamic Crosshair",
+	"description": "Crosshair turns into red brackets on entities and white brackets on blocks you can right-click.",
+	"license": "MIT",
+	"environment": "client",
+	"mixins": [
+		"dynamiccrosshair.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "${mc_range}",
+		"java": ">=${java_version}"
+	}
+}
